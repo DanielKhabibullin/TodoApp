@@ -4,10 +4,7 @@ import {renderApp, renderTasks} from './modules/render.js';
 window.addEventListener('DOMContentLoaded', () => {
 	const init = () => {
 		const {
-			container,
 			form,
-			tableWrapper,
-			tableRow,
 			user,
 			tbody,
 		} = renderApp();

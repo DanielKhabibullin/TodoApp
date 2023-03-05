@@ -1,4 +1,5 @@
 import {createRow, goodNumberChange} from './createElements.js';
+import {renderTasks} from './render.js';
 import {getStorage, removeStorage, setStorage} from './serviceStorage.js';
 
 
@@ -45,7 +46,6 @@ export const deleteTask = (user, tbody) => {
 		const target = event.target;
 		if (target.classList.contains('btn-danger')) {
 			const row = target.closest('tr');
-			console.log(row);
 			const taskId = parseInt(row.dataset.id);
 			if (confirm('Are you sure you want to delete this task?')) {
 				removeStorage(user, taskId);
@@ -56,6 +56,10 @@ export const deleteTask = (user, tbody) => {
 	});
 };
 
+const clearTable = (tbody) => {
+	tbody.innerHTML = '';
+};
+
 export const completeTask = (user, tbody) => {
 	tbody.addEventListener('click', (event) => {
 		const target = event.target;
@@ -64,9 +68,13 @@ export const completeTask = (user, tbody) => {
 			const taskId = parseInt(row.dataset.id);
 			const tasks = getStorage(user);
 			const taskIndex = tasks.findIndex((task) => task.id === taskId);
-			const task = tasks[taskIndex];
-			task.progress = 'Completed';
-			localStorage.setItem(user, JSON.stringify(tasks));
+			if (taskIndex !== -1) {
+				const task = tasks[taskIndex];
+				task.progress = 'Completed';
+				localStorage.setItem(user, JSON.stringify(tasks));
+				clearTable(tbody);
+				renderTasks(user, tbody);
+			}
 		}
 	});
 };
