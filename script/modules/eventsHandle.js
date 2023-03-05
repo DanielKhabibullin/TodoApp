@@ -61,8 +61,8 @@ const clearTable = (tbody) => {
 };
 
 export const completeTask = (user, tbody) => {
-	tbody.addEventListener('click', (event) => {
-		const target = event.target;
+	tbody.addEventListener('click', (e) => {
+		const target = e.target;
 		if (target.classList.contains('btn-success')) {
 			const row = target.closest('tr');
 			const taskId = parseInt(row.dataset.id);
@@ -74,6 +74,32 @@ export const completeTask = (user, tbody) => {
 				localStorage.setItem(user, JSON.stringify(tasks));
 				clearTable(tbody);
 				renderTasks(user, tbody);
+			}
+		}
+	});
+};
+
+export const editTask = (user, tbody) => {
+	tbody.addEventListener('click', (e) => {
+		const target = e.target;
+		if (target.classList.contains('btn-secondary')) {
+			const row = target.closest('tr');
+			const taskId = parseInt(row.dataset.id);
+			const tasks = getStorage(user);
+			const taskIndex = tasks.findIndex((task) => task.id === taskId);
+			if (taskIndex !== -1) {
+				const taskNameCell = row.querySelector('.task');
+				if (taskNameCell.isContentEditable) {
+					const updatedTaskName = taskNameCell.textContent.trim();
+					tasks[taskIndex].task = updatedTaskName;
+					localStorage.setItem(user, JSON.stringify(tasks));
+				}
+				taskNameCell.contentEditable = !taskNameCell.isContentEditable;
+				taskNameCell.classList.toggle('editable');
+				if (taskNameCell.classList.contains('editable')) {
+					taskNameCell.focus();
+				}
+				target.textContent = taskNameCell.isContentEditable ? 'Save' : 'Edit';
 			}
 		}
 	});

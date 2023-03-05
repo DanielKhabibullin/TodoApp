@@ -8,7 +8,6 @@ export const renderApp = () => {
 	const tableWrapper = createTable();
 	const user = askName();
 	const tbody = document.querySelector('tbody');
-	// const tableRow = createRow();
 
 	return {
 		container,
@@ -25,5 +24,3 @@ export const renderTasks = (user, tbody) => {
 	goodNumberChange(tbody);
 	return allRow;
 };
-
-

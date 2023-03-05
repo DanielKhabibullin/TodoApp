@@ -82,24 +82,29 @@ export const createRow = ({id, task, progress}) => {
 	const tableRow = document.createElement('tr');
 	let className = 'table-success';
 	let tdClass = 'text-decoration-line-through';
+	let btnDisable = 'disabled';
 	if (progress === 'In progress') {
 		className = 'table-light';
 		tdClass = 'task';
+		btnDisable = '';
 	}
 	tableRow.classList.add(className);
 	tableRow.setAttribute('data-id', id);
 	tableRow.innerHTML = `
 	<td></td>
-	<td class="${tdClass}">
+	<td class="${tdClass}" contenteditable="false">
 		${task}
 	</td>
 	<td>${progress}</td>
 	<td>
-		<button class="btn btn-danger">
+		<button class="btn btn-danger me-1">
 			Delete
 		</button>
-		<button class="btn btn-success">
+		<button class="btn btn-success me-1">
 			Complete
+		</button>
+		<button class="btn btn-secondary me-1" ${btnDisable}>
+			Edit
 		</button>
 		</td>
 	`;

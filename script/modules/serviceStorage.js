@@ -3,10 +3,6 @@ JSON.parse(localStorage.getItem(key)) : []);
 
 export const askName = () => {
 	const user = prompt('Please enter your name:');
-	// getStorage(user);
-	// const tasks = [];
-	// const existingTasks = localStorage.getItem(user);
-	// tasks.push(existingTasks ? JSON.parse(existingTasks) : []);
 	return user;
 };
 
