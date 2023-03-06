@@ -80,7 +80,8 @@ export const completeTask = (user, tbody) => {
 			const taskIndex = tasks.findIndex((task) => task.id === taskId);
 			if (taskIndex !== -1) {
 				const task = tasks[taskIndex];
-				task.progress = 'Completed';
+				task.progress === 'Completed' ? task.progress = 'In progress' :
+					task.progress = 'Completed';
 				localStorage.setItem(user, JSON.stringify(tasks));
 				clearTable(tbody);
 				renderTasks(user, tbody);

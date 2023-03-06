@@ -90,10 +90,12 @@ export const createRow = ({id, task, progress, priority}) => {
 	const tableRow = document.createElement('tr');
 	let tdClass = 'task';
 	let btnDisable = '';
+	let complete = 'Complete';
 	if (progress === 'Completed') {
 		priority = 'table-success';
 		tdClass = 'text-decoration-line-through';
 		btnDisable = 'disabled';
+		complete = 'Uncomplete';
 	}
 	tableRow.classList.add(priority);
 	tableRow.setAttribute('data-id', id);
@@ -107,8 +109,8 @@ export const createRow = ({id, task, progress, priority}) => {
 		<button class="btn btn-danger me-1">
 			Delete
 		</button>
-		<button class="btn btn-success me-1">
-			Complete
+		<button class="btn btn-success me-1" style="min-width: 114px;">
+			${complete}
 		</button>
 		<button class="btn btn-secondary me-1" ${btnDisable}>
 			Edit
@@ -126,5 +128,3 @@ export const goodNumberChange = (tbody) => {
 		item.cells[0].textContent = `${index + 1}`;
 	});
 };
-
-
