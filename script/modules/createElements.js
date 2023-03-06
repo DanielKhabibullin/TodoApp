@@ -41,13 +41,26 @@ export const createForm = () => {
 			btnSave.setAttribute('disabled', true);
 		}
 	});
-	form.append(btnSave);
+	const dropdown = document.createElement('select');
+	dropdown.classList.add('form-select', 'me-3');
+	dropdown.innerHTML = `
+		<option value="table-light">Ordinary</option>
+		<option value="table-warning">Important</option>
+		<option value="table-danger">Urgent</option>
+	`;
+	dropdown.addEventListener('change', (e) => {
+		const selectedClass = e.target.value;
+		const input = form.querySelector('input');
+		input.classList.add(selectedClass);
+	});
+	form.append(dropdown);
 	const btnClear = createBtn(
 		{
 			className: 'btn btn-warning',
 			type: 'reset',
 			text: 'Clear',
 		});
+	form.append(btnSave);
 	form.append(btnClear);
 	container.append(form);
 	return form;
@@ -80,15 +93,15 @@ export const createTable = () => {
 export const createRow = ({id, task, progress}) => {
 	const tbody = document.querySelector('tbody');
 	const tableRow = document.createElement('tr');
-	let className = 'table-success';
+	let priorityClass = 'table-success';
 	let tdClass = 'text-decoration-line-through';
 	let btnDisable = 'disabled';
 	if (progress === 'In progress') {
-		className = 'table-light';
+		priorityClass = 'table-light';
 		tdClass = 'task';
 		btnDisable = '';
 	}
-	tableRow.classList.add(className);
+	tableRow.classList.add(priorityClass);
 	tableRow.setAttribute('data-id', id);
 	tableRow.innerHTML = `
 	<td></td>
@@ -108,6 +121,14 @@ export const createRow = ({id, task, progress}) => {
 		</button>
 		</td>
 	`;
+	// const dropdownItems = tableRow.querySelectorAll('.dropdown-item');
+	// dropdownItems.forEach(item => {
+	// 	item.addEventListener('click', () => {
+	// 		const priority = item.dataset.priority;
+	// 		tableRow.classList.remove('table-light', 'table-warning', 'table-danger');
+	// 		tableRow.classList.add(priority);
+	// 	});
+	// });
 	tbody.append(tableRow);
 	return tableRow;
 };
