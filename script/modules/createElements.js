@@ -23,7 +23,7 @@ export const createForm = () => {
 	form.innerHTML = `
 	<label class="form-group me-3 mb-0">
 		<input id="input" type="text" class="form-control"
-			placeholder="enter new task" required>
+			placeholder="enter new task" style="width: 200px;" required>
 	</label>
 	`;
 	const btnSave = createBtn(
@@ -48,11 +48,7 @@ export const createForm = () => {
 		<option value="table-warning">Important</option>
 		<option value="table-danger">Urgent</option>
 	`;
-	dropdown.addEventListener('change', (e) => {
-		const selectedClass = e.target.value;
-		const input = form.querySelector('input');
-		input.classList.add(selectedClass);
-	});
+
 	form.append(dropdown);
 	const btnClear = createBtn(
 		{
@@ -84,24 +80,22 @@ export const createTable = () => {
 	`);
 
 	const tbody = document.createElement('tbody');
-	console.log('tbody: ', tbody);
 	table.append(thead, tbody);
 
 	return tableWrapper;
 };
 
-export const createRow = ({id, task, progress}) => {
+export const createRow = ({id, task, progress, priority}) => {
 	const tbody = document.querySelector('tbody');
 	const tableRow = document.createElement('tr');
-	let priorityClass = 'table-success';
-	let tdClass = 'text-decoration-line-through';
-	let btnDisable = 'disabled';
-	if (progress === 'In progress') {
-		priorityClass = 'table-light';
-		tdClass = 'task';
-		btnDisable = '';
+	let tdClass = 'task';
+	let btnDisable = '';
+	if (progress === 'Completed') {
+		priority = 'table-success';
+		tdClass = 'text-decoration-line-through';
+		btnDisable = 'disabled';
 	}
-	tableRow.classList.add(priorityClass);
+	tableRow.classList.add(priority);
 	tableRow.setAttribute('data-id', id);
 	tableRow.innerHTML = `
 	<td></td>
@@ -121,14 +115,7 @@ export const createRow = ({id, task, progress}) => {
 		</button>
 		</td>
 	`;
-	// const dropdownItems = tableRow.querySelectorAll('.dropdown-item');
-	// dropdownItems.forEach(item => {
-	// 	item.addEventListener('click', () => {
-	// 		const priority = item.dataset.priority;
-	// 		tableRow.classList.remove('table-light', 'table-warning', 'table-danger');
-	// 		tableRow.classList.add(priority);
-	// 	});
-	// });
+
 	tbody.append(tableRow);
 	return tableRow;
 };

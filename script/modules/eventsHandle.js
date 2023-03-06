@@ -9,7 +9,15 @@ export const addNewTask = (user, obj, tbody) => {
 	goodNumberChange(tbody);
 };
 
+export const clearInput = (form) => {
+	const btnSave = document.querySelector('.btn-primary');
+	form.addEventListener('reset', () => {
+		btnSave.setAttribute('disabled', true);
+	});
+};
+
 export const handleSubmit = (form, user, tbody) => {
+	const dropdown = form.querySelector('select');
 	const btnSave = document.querySelector('.btn-primary');
 	form.addEventListener('submit', e => {
 		e.preventDefault();
@@ -19,6 +27,7 @@ export const handleSubmit = (form, user, tbody) => {
 			id: Date.now(),
 			task: input.value,
 			progress: 'In progress',
+			priority: dropdown.value,
 		};
 		addNewTask(user, newTask, tbody);
 		form.reset();
@@ -33,6 +42,7 @@ export const handleSubmit = (form, user, tbody) => {
 				id: Date.now(),
 				task: input.value,
 				progress: 'In progress',
+				priority: dropdown.value,
 			};
 			addNewTask(user, newTask, tbody);
 			form.reset();
