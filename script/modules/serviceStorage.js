@@ -3,7 +3,7 @@ JSON.parse(localStorage.getItem(key)) : []);
 
 export const askName = () => {
 	const user = prompt('Please enter your name:');
-	return user;
+	return (!user || user.trim() === '') ? 'anonymous' : user;
 };
 
 export const setStorage = (user, task) => {

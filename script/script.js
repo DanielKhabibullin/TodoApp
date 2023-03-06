@@ -1,6 +1,5 @@
 import {clearInput, completeTask, deleteTask,
-	editTask,
-	handleSubmit} from './modules/eventsHandle.js';
+	editTask, handleSubmit} from './modules/eventsHandle.js';
 import {renderApp, renderTasks} from './modules/render.js';
 window.addEventListener('DOMContentLoaded', () => {
 	const init = () => {

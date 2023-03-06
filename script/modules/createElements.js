@@ -23,7 +23,7 @@ export const createForm = () => {
 	form.innerHTML = `
 	<label class="form-group me-3 mb-0">
 		<input id="input" type="text" class="form-control"
-			placeholder="enter new task" required>
+			placeholder="enter new task" style="width: 200px;" required>
 	</label>
 	`;
 	const btnSave = createBtn(
@@ -41,13 +41,22 @@ export const createForm = () => {
 			btnSave.setAttribute('disabled', true);
 		}
 	});
-	form.append(btnSave);
+	const dropdown = document.createElement('select');
+	dropdown.classList.add('form-select', 'me-3');
+	dropdown.innerHTML = `
+		<option value="table-light">Ordinary</option>
+		<option value="table-warning">Important</option>
+		<option value="table-danger">Urgent</option>
+	`;
+
+	form.append(dropdown);
 	const btnClear = createBtn(
 		{
 			className: 'btn btn-warning',
 			type: 'reset',
 			text: 'Clear',
 		});
+	form.append(btnSave);
 	form.append(btnClear);
 	container.append(form);
 	return form;
@@ -71,24 +80,22 @@ export const createTable = () => {
 	`);
 
 	const tbody = document.createElement('tbody');
-	console.log('tbody: ', tbody);
 	table.append(thead, tbody);
 
 	return tableWrapper;
 };
 
-export const createRow = ({id, task, progress}) => {
+export const createRow = ({id, task, progress, priority}) => {
 	const tbody = document.querySelector('tbody');
 	const tableRow = document.createElement('tr');
-	let className = 'table-success';
-	let tdClass = 'text-decoration-line-through';
-	let btnDisable = 'disabled';
-	if (progress === 'In progress') {
-		className = 'table-light';
-		tdClass = 'task';
-		btnDisable = '';
+	let tdClass = 'task';
+	let btnDisable = '';
+	if (progress === 'Completed') {
+		priority = 'table-success';
+		tdClass = 'text-decoration-line-through';
+		btnDisable = 'disabled';
 	}
-	tableRow.classList.add(className);
+	tableRow.classList.add(priority);
 	tableRow.setAttribute('data-id', id);
 	tableRow.innerHTML = `
 	<td></td>
@@ -108,6 +115,7 @@ export const createRow = ({id, task, progress}) => {
 		</button>
 		</td>
 	`;
+
 	tbody.append(tableRow);
 	return tableRow;
 };
